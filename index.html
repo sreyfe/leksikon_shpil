@@ -1,6 +1,6 @@
 <HTML>
 	<head>
-		<script type="text/javascript" src="data.json"></script>
+		<script type="text/javascript" src="leksikon.json"></script>
 	</head>
 	<body>
 		<h1>WOW! It's the <em>Leksikon Shpil</em></h1>
@@ -17,14 +17,11 @@
 				document.getElementById("name").innerHTML = random_entry["name"]
 			}
 
-			random_entry = data[getRandomInt(5805)]
+			random_entry = leksikon[getRandomInt(Object.keys(leksikon).length)]
 
-			split_content = random_entry["content"].split(".")
-
-			random_sentence = split_content[getRandomInt(split_content.length)]
+			random_sentence = random_entry["content"][getRandomInt(random_entry["content"].length)]
 
 			document.getElementById("rand_sent").innerHTML = random_sentence
-
 
 		</script>
 	</body>
