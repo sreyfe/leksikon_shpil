@@ -1,7 +1,31 @@
 <HTML>
 	<head>
+		<script type="text/javascript" src="data.json"></script>
 	</head>
 	<body>
 		<h1>WOW! It's the <em>Leksikon Shpil</em></h1>
+		<h2>Whose article does this sentence come from?</h2>
+		<p id="rand_sent"></p>
+		<button onclick="revealName()">Reveal Name</button>
+		<p id="name"></p>
+		<script>
+			function getRandomInt(max) {
+				return Math.floor(Math.random() * max);
+			}
+
+			function revealName(){
+				document.getElementById("name").innerHTML = random_entry["name"]
+			}
+
+			random_entry = data[getRandomInt(5805)]
+
+			split_content = random_entry["content"].split(".")
+
+			random_sentence = split_content[getRandomInt(split_content.length)]
+
+			document.getElementById("rand_sent").innerHTML = random_sentence
+
+
+		</script>
 	</body>
 </HTML>
