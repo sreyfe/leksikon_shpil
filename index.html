@@ -44,7 +44,7 @@
 
 			function check(guess) {
 				guesses += 1;
-				if (guess.value==random_entry["name"]) {
+				if (guess.innerHTML==random_entry["name"]) {
 					document.getElementById("status").innerHTML = "Correct!!";
 				} else {
 					if (guesses < 5) {
