@@ -45,13 +45,14 @@
 				document.getElementById("name").innerHTML = random_entry["name"];
 				document.getElementById("full_bio").innerHTML = bio;
 				if (winner) {
-					document.getElementById("bio_reveal").style.background = "rgba(255, 192, 203, 0.3)";
-					document.getElementById("bio_reveal").style.border = ".2em dashed pink";
+					document.getElementById("bio_reveal").style.background = "rgba(0, 128, 0, 0.3)";
+					document.getElementById("bio_reveal").style.border = ".2em dashed green";
 					document.getElementById("bio_reveal").style.padding = ".5em";
 					document.getElementById("bio_reveal").style.borderRadius = ".3em";
 				} else {
-					document.getElementById("bio_reveal").style.background = "rgba(0, 128, 0, 0.3)";
-					document.getElementById("bio_reveal").style.border = ".2em dashed green";
+
+					document.getElementById("bio_reveal").style.background = "rgba(255, 192, 203, 0.3)";
+					document.getElementById("bio_reveal").style.border = ".2em dashed pink";
 					document.getElementById("bio_reveal").style.padding = ".5em";
 					document.getElementById("bio_reveal").style.borderRadius = ".3em";
 				}
@@ -72,8 +73,10 @@
 				// correct! disable and reveal full bio
 				if (guess.innerHTML==random_entry["name"]) {
 					document.getElementById("status").innerHTML = "Correct!!";
-					guess.style.background = "rgba(255, 192, 203, 0.3)";
 					buttons = document.getElementsByClassName("answer_button");
+
+					guess.style.background = "rgba(0, 128, 0, 0.3)";
+					document.getElementById("status").style.background = "rgba(0, 128, 0, 0.3)"
 					for (let i = 0; i < buttons.length; i++) {
 					  buttons[i].disabled = true;
 					}
@@ -82,7 +85,8 @@
 				} else { // wrong cases
 						// give new hint, diable and color wrong guess
 						guess.disabled = true;
-						guess.style.background = "rgba(0, 128, 0, 0.3)";
+
+						guess.style.background = "rgba(255, 192, 203, 0.3)";
 						hint();
 						switch(guesses) {
 							case 5:
