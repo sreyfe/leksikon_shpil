@@ -22,7 +22,10 @@
 				<button onclick="check(this)" class="answer_button" id="answer5" type="button"></button>
 				<button onclick="check(this)" class="answer_button" id="answer6" type="button"></button>
 			</div>
-			<p id="name"></p>
+			<div id="bio_reveal">
+				<h2 id="name"></h2>
+				<p id="full_bio"></p>
+			</div>
 		</div>
 
 		<script>
@@ -34,6 +37,26 @@
 				document.getElementById("status").insertAdjacentHTML('beforeend','<br>Total: ' + guesses + ' GUESSES');
 			}
 
+			function displayBio(winner) {
+				var bio = "";
+				for (let i = 0; i < random_entry["content"].length; i++) {
+					bio += random_entry["content"][i] + " ";
+				}
+				document.getElementById("name").innerHTML = random_entry["name"];
+				document.getElementById("full_bio").innerHTML = bio;
+				if (winner) {
+					document.getElementById("bio_reveal").style.background = "rgba(255, 192, 203, 0.3)";
+					document.getElementById("bio_reveal").style.border = ".2em dashed pink";
+					document.getElementById("bio_reveal").style.padding = ".5em";
+					document.getElementById("bio_reveal").style.borderRadius = ".3em";
+				} else {
+					document.getElementById("bio_reveal").style.background = "rgba(0, 128, 0, 0.3)";
+					document.getElementById("bio_reveal").style.border = ".2em dashed green";
+					document.getElementById("bio_reveal").style.padding = ".5em";
+					document.getElementById("bio_reveal").style.borderRadius = ".3em";
+				}
+			}
+
 			function hint(){
 				if (guesses > 1) {
 					var prev = guesses-1;
@@ -41,21 +64,24 @@
 				}
 				document.getElementById("bio").insertAdjacentHTML('beforeend'," <span class='highlight' id='highlight" + guesses + "'>" +  random_entry["content"][sentence_sequence[guesses]] + "</span>");
 
-				document.getElementById("highlight" + guesses).style.background = "pink";
+				document.getElementById("highlight" + guesses).style.background = "rgba(255, 192, 203, 0.3)";
 			}
 
 			function check(guess) {
 				guesses += 1;
+				// correct! disable and reveal full bio
 				if (guess.innerHTML==random_entry["name"]) {
 					document.getElementById("status").innerHTML = "Correct!!";
-					guess.style.background = "pink";
+					guess.style.background = "rgba(255, 192, 203, 0.3)";
 					buttons = document.getElementsByClassName("answer_button");
 					for (let i = 0; i < buttons.length; i++) {
 					  buttons[i].disabled = true;
 					}
 					displayGuesses();
-				} else {
+					displayBio(true);
+				} else { // wrong cases
 					if (guesses < 5) {
+						// give new hint, diable and color wrong guess
 						guess.disabled = true;
 						guess.style.background = "rgba(0, 128, 0, 0.3)";
 						hint();
@@ -65,28 +91,17 @@
 						document.getElementById("status").innerHTML = "You need some more help...";
 						}
 					} else {
+						// 5 guesses exhausted, disable, color, reveal
 						document.getElementById("status").innerHTML = "You don't know nothin' about Yiddish writers. You failed. Failure.";
 						buttons = document.getElementsByClassName("answer_button");
 						for (let i = 0; i < buttons.length; i++) {
 						  buttons[i].disabled = true;
 						}
-						document.getElementById("answer" + answer_index).style.background = "pink";
+						document.getElementById("answer" + answer_index).style.background = "rgba(255, 192, 203, 0.3)";
+						displayBio(false);
 					}
 				}
 			}
-			/*
-
-			if selection is wrong:
-				make wrong selection unclickable
-				update "tries" counter visible to use
-				provide new random sentence from bio
-			right:
-				celebrate
-				display total tries
-				display full bio
-		  */
-
-
 			// today is days since epoch - x days. 20118 is days since epoch on jan 29, 2025
 			today = Math.floor(Date.now()/8.64e7) - 20118;
 			random_entry = leksikon[sequence[today][0]];
@@ -135,7 +150,9 @@
 		}
 		#status {
 			text-align: center;
-			background-color: pink;
+			background-color: rgba(255, 192, 203, 0.3);
+		}
+		#bio_reveal {
 		}
 		</style>
 	</body>
