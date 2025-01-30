@@ -14,13 +14,13 @@
 			<p id="status">
 			</p>
 			<div id="options">
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer0" type="button"></button>
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer1" type="button"></button>
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer2" type="button"></button>
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer3" type="button"></button>
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer4" type="button"></button>
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer5" type="button"></button>
-				<button onclick="check(this.innerHTML)" class="answer_button" id="answer6" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer0" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer1" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer2" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer3" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer4" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer5" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer6" type="button"></button>
 			</div>
 			<p id="name"></p>
 		</div>
@@ -44,7 +44,7 @@
 
 			function check(guess) {
 				guesses += 1;
-				if (guess==random_entry["name"]) {
+				if (guess.value==random_entry["name"]) {
 					document.getElementById("status").innerHTML = "Correct!!";
 				} else {
 					if (guesses < 5) {
