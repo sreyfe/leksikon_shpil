@@ -30,13 +30,15 @@
 				return Math.floor(Math.random() * max);
 			}
 
+			function displayGuesses(){
+				document.getElementById("status").insertAdjacentHTML('beforeend','<br>Total: ' + guesses + ' GUESSES');
+			}
+
 			function hint(){
 				if (guesses > 1) {
 					var prev = guesses-1;
 					document.getElementById("highlight" + prev).style.background = "none";
 				}
-
-
 				document.getElementById("bio").insertAdjacentHTML('beforeend'," <span class='highlight' id='highlight" + guesses + "'>" +  random_entry["content"][sentence_sequence[guesses]] + "</span>");
 
 				document.getElementById("highlight" + guesses).style.background = "pink";
@@ -46,9 +48,16 @@
 				guesses += 1;
 				if (guess.innerHTML==random_entry["name"]) {
 					document.getElementById("status").innerHTML = "Correct!!";
+					guess.style.background = "pink";
+					buttons = document.getElementsByClassName("answer_button");
+					for (let i = 0; i < buttons.length; i++) {
+					  buttons[i].disabled = true;
+					}
+					displayGuesses();
 				} else {
 					if (guesses < 5) {
 						guess.disabled = true;
+						guess.style.background = "rgba(0, 128, 0, 0.3)";
 						hint();
 						if (guesses == 4) {
 							document.getElementById("status").innerHTML = "Last try!";
@@ -56,9 +65,10 @@
 						document.getElementById("status").innerHTML = "You need some more help...";
 						}
 					} else {
-						document.getElementById("status").innerHTML = "You don't know nothin' about Yiddish writers.";
-						if (guesses == 5) {
-							guess.disabled = true;
+						document.getElementById("status").innerHTML = "You don't know nothin' about Yiddish writers. You failed. Failure.";
+						buttons = document.getElementsByClassName("answer_button");
+						for (let i = 0; i < buttons.length; i++) {
+						  buttons[i].disabled = true;
 						}
 						document.getElementById("answer" + answer_index).style.background = "pink";
 					}
