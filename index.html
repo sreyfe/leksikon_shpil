@@ -1,11 +1,24 @@
 <HTML>
 	<head>
 		<script type="text/javascript" src="leksikon.json"></script>
+		<script type="text/javascript" src="sequence.json"></script>
 	</head>
 	<body>
 		<h1>WOW! It's the <em>Leksikon Shpil</em></h1>
 		<h2>Whose article does this sentence come from?</h2>
-		<p id="rand_sent"></p>
+		<p id="rand_sent">
+		</p>
+		<div id="options">
+			<h2>Who is it?</h2>
+			<button id="answer0" type="button"></button>
+			<button id="answer1" type="button"></button>
+			<button id="answer2" type="button"></button>
+			<button id="answer3" type="button"></button>
+			<button id="answer4" type="button"></button>
+			<button id="answer5" type="button"></button>
+			<button id="answer6" type="button"></button>
+		</div>
+		<button onclick="hint()">Another Hint</button>
 		<button onclick="revealName()">Reveal Name</button>
 		<p id="name"></p>
 		<script>
@@ -17,11 +30,40 @@
 				document.getElementById("name").innerHTML = random_entry["name"]
 			}
 
-			random_entry = leksikon[getRandomInt(Object.keys(leksikon).length)]
+			function hint(){
+				guesses += 1;
+				document.getElementById("rand_sent").insertAdjacentHTML('beforeend', random_entry["content"][sentence_sequence[guesses]]);
+			}
 
-			random_sentence = random_entry["content"][getRandomInt(random_entry["content"].length)]
+			/*
+		
+			if selection is wrong:
+				make wrong selection unclickable
+				update "tries" counter visible to use
+				provide new random sentence from bio
+			right:
+				celebrate
+				display total tries
+				display full bio
+		  */
 
-			document.getElementById("rand_sent").innerHTML = random_sentence
+
+			// today is days since epoch - x days. 20118 is days since epoch on jan 29, 2025
+			today = Math.floor(Date.now()/8.64e7) - 20118;
+			random_entry = leksikon[sequence[today][0]];
+			sentence_sequence = sequence[today][2];
+			// the correct answer must be inserted randomly among answer_choices (note that unless all answer choices are shuffled, the answer reveals itself on refresh by being the only to change positions)
+			answer_choices = [leksikon[sequence[today][1][0]]["name"], leksikon[sequence[today][1][1]]["name"], leksikon[sequence[today][1][2]]["name"], leksikon[sequence[today][1][3]]["name"], leksikon[sequence[today][1][4]]["name"], leksikon[sequence[today][1][5]]["name"]];
+			answer_index = getRandomInt(7);
+			answer_choices.splice(answer_index, 0, random_entry["name"]);
+			for (let i = 0; i < answer_choices.length; i++) {
+  			document.getElementById("answer" + i).innerHTML = answer_choices[i];
+			}
+
+			random_sentence = random_entry["content"][sentence_sequence[0]];
+			document.getElementById("rand_sent").innerHTML = random_sentence;
+
+			guesses = 0
 
 		</script>
 	</body>
