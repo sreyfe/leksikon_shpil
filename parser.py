@@ -1,5 +1,5 @@
-import nltk
 import json
+from nltk.tokenize import PunktSentenceTokenizer
 
 with open('data.json') as f:
     leksikon = json.load(f)
@@ -12,8 +12,9 @@ new_leksikon = []
 for entry in leksikon:
     name = entry["name"].title()
     content = entry["content"]
-    content = content[content.find("\n") + 1:content.find("\nSource")].strip()
-    content_split = nltk.tokenize.sent_tokenize(content, language='english')
+    content = content[content.find("\n", content.find("\n")+1) + 1:content.find("\nSource")].strip()
+    sent_tokenizer = PunktSentenceTokenizer(content)
+    content_split = sent_tokenizer.tokenize(content)
     for i in range(len(content_split)):
         content_split[i] = content_split[i].replace("\n", " ")
     new_leksikon.append({"name": name, "content": content_split})

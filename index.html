@@ -4,39 +4,68 @@
 		<script type="text/javascript" src="sequence.json"></script>
 	</head>
 	<body>
-		<h1>WOW! It's the <em>Leksikon Shpil</em></h1>
-		<h2>Whose article does this sentence come from?</h2>
-		<p id="rand_sent">
-		</p>
-		<div id="options">
-			<h2>Who is it?</h2>
-			<button id="answer0" type="button"></button>
-			<button id="answer1" type="button"></button>
-			<button id="answer2" type="button"></button>
-			<button id="answer3" type="button"></button>
-			<button id="answer4" type="button"></button>
-			<button id="answer5" type="button"></button>
-			<button id="answer6" type="button"></button>
+		<div id="title">
+			<h1>WOW! It's the <em>Leksikon Shpil</em></h1>
+			<h2>Whose article does this sentence come from?</h2>
 		</div>
-		<button onclick="hint()">Another Hint</button>
-		<button onclick="revealName()">Reveal Name</button>
-		<p id="name"></p>
+		<div id="quiz">
+			<p id="bio">
+			</p>
+			<p id="status">
+			</p>
+			<div id="options">
+				<button onclick="check(this)" class="answer_button" id="answer0" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer1" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer2" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer3" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer4" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer5" type="button"></button>
+				<button onclick="check(this)" class="answer_button" id="answer6" type="button"></button>
+			</div>
+			<p id="name"></p>
+		</div>
+
 		<script>
 			function getRandomInt(max) {
 				return Math.floor(Math.random() * max);
 			}
 
-			function revealName(){
-				document.getElementById("name").innerHTML = random_entry["name"]
-			}
-
 			function hint(){
-				guesses += 1;
-				document.getElementById("rand_sent").insertAdjacentHTML('beforeend', random_entry["content"][sentence_sequence[guesses]]);
+				if (guesses > 1) {
+					var prev = guesses-1;
+					document.getElementById("highlight" + prev).style.background = "none";
+				}
+
+
+				document.getElementById("bio").insertAdjacentHTML('beforeend'," <span class='highlight' id='highlight" + guesses + "'>" +  random_entry["content"][sentence_sequence[guesses]] + "</span>");
+
+				document.getElementById("highlight" + guesses).style.background = "pink";
 			}
 
+			function check(guess) {
+				guesses += 1;
+				if (guess.value==random_entry["name"]) {
+					document.getElementById("status").innerHTML = "Correct!!";
+				} else {
+					if (guesses < 5) {
+						guess.disabled = true;
+						hint();
+						if (guesses == 4) {
+							document.getElementById("status").innerHTML = "Last try!";
+						} else {
+						document.getElementById("status").innerHTML = "You need some more help...";
+						}
+					} else {
+						document.getElementById("status").innerHTML = "You don't know nothin' about Yiddish writers.";
+						if (guesses == 5) {
+							guess.disabled = true;
+						}
+						document.getElementById("answer" + answer_index).style.background = "pink";
+					}
+				}
+			}
 			/*
-		
+
 			if selection is wrong:
 				make wrong selection unclickable
 				update "tries" counter visible to use
@@ -61,10 +90,43 @@
 			}
 
 			random_sentence = random_entry["content"][sentence_sequence[0]];
-			document.getElementById("rand_sent").innerHTML = random_sentence;
+			document.getElementById("bio").innerHTML = random_sentence;
 
 			guesses = 0
 
 		</script>
+		<style>
+		body {
+			width: 100%;
+		}
+		#title {
+			text-align: center;
+		}
+		#quiz {
+			font-size: 1.5em;
+			width: 65%;
+			margin: auto;
+		}
+		#bio {
+			border: .2em dashed green;
+			padding: .5em;
+			border-radius: .3em;
+		}
+		#options {
+			width: 100%;
+			margin: auto;
+			text-align: center;
+		}
+		.answer_button {
+			padding: .2em;
+			margin: .3em;
+			font-size: 1em;
+
+		}
+		#status {
+			text-align: center;
+			background-color: pink;
+		}
+		</style>
 	</body>
 </HTML>

@@ -2,7 +2,8 @@ The leksikon JSON is still messy:
   1) sentences split at semi-colons where published works are listed
   2) some entries still have names repeated in the content, or portion of
   their dates
+   
+
 
   for 1) might be ok to simply prefix such sentences with generic "Published
   ..."
-
