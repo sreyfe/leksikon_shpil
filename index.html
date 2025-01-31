@@ -63,9 +63,11 @@
 					var prev = guesses-1;
 					document.getElementById("highlight" + prev).style.background = "none";
 				}
-				document.getElementById("bio").insertAdjacentHTML('beforeend'," <span class='highlight' id='highlight" + guesses + "'>" +  random_entry["content"][sentence_sequence[guesses]] + "</span>");
+				if (guesses < 5) {
+					document.getElementById("bio").insertAdjacentHTML('beforeend'," <span class='highlight' id='highlight" + guesses + "'>" +  random_entry["content"][sentence_sequence[guesses]] + "</span>");
 
-				document.getElementById("highlight" + guesses).style.background = "rgba(255, 192, 203, 0.3)";
+					document.getElementById("highlight" + guesses).style.background = "rgba(255, 192, 203, 0.3)";
+				}
 			}
 
 			function check(guess) {
