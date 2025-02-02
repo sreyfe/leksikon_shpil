@@ -11,23 +11,31 @@ new_leksikon = []
 # split sentences of content
 # change case of name
 # censor last name in sentences
+
+training_text = ""
+for entry in leksikon:
+    training_text += entry["content"]
+
+
+sent_tokenizer = PunktSentenceTokenizer(training_text)
+
 for entry in leksikon:
     name = entry["name"].title()
-    last_name = name.split(" ")[-1]
+    split_names = name.replace("(", "").replace(")", "").split(" ")
 
     content = entry["content"]
     content = content[content.find("\n", content.find("\n")+1) + 1:content.find("\nSource")].strip()
 
-    sent_tokenizer = PunktSentenceTokenizer(content)
     content_split = sent_tokenizer.tokenize(content)
     for i in range(len(content_split)):
         content_split[i] = content_split[i].replace("\n", " ")
 
     #replace name with █████
     censored_split = []
-    for uncensored in content_split:
-        censored = uncensored.replace(last_name, "█████")
-        censored_split.append(censored)
+    for sentence in content_split:
+        for split_name in split_names:
+            sentence = sentence.replace(split_name, "█████")
+        censored_split.append(sentence)
 
     new_leksikon.append({"name": name, "content": censored_split})
 
