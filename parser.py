@@ -1,6 +1,7 @@
 import json
 import random
 from nltk.tokenize import PunktSentenceTokenizer
+import re
 
 with open('data.json') as f:
     leksikon = json.load(f)
@@ -25,6 +26,10 @@ for entry in leksikon:
 
     content = entry["content"]
     content = content[content.find("\n", content.find("\n")+1) + 1:content.find("\nSource")].strip()
+    #replace 'pp.' with 'pages' unless it ends a sentence. same with 'trans.' to 'translated by'
+    #except this can't end a sentence, so we do a normal replace
+    content = re.sub(r'pp.(?! [A-Z])', 'pages', content)
+    content = content.replace("trans.", "translated by")
 
     content_split = sent_tokenizer.tokenize(content)
     for i in range(len(content_split)):
