@@ -28,7 +28,9 @@ for entry in leksikon:
     content = content[content.find("\n", content.find("\n")+1) + 1:content.find("\nSource")].strip()
     #replace 'pp.' with 'pages' unless it ends a sentence. same with 'trans.' to 'translated by'
     #except this can't end a sentence, so we do a normal replace
-    content = re.sub(r'pp.(?! [A-Z])', 'pages', content)
+    #also first get rid of non-breaking spaces, which, ironically, break everything
+    content = content.replace("\u00a0", "")
+    content = re.sub(r'pp\.(?! [A-Z])', 'pages', content)
     content = content.replace("trans.", "translated by")
 
     content_split = sent_tokenizer.tokenize(content)
