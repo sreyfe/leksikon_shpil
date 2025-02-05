@@ -22,7 +22,6 @@ sent_tokenizer = PunktSentenceTokenizer(training_text)
 
 for entry in leksikon:
     name = entry["name"].title()
-    split_names = name.replace("(", "").replace(")", "").split(" ")
 
     content = entry["content"]
     content = content[content.find("\n", content.find("\n")+1) + 1:content.find("\nSource")].strip()
@@ -37,14 +36,7 @@ for entry in leksikon:
     for i in range(len(content_split)):
         content_split[i] = content_split[i].replace("\n", " ")
 
-    #replace name with █████
-    censored_split = []
-    for sentence in content_split:
-        for split_name in split_names:
-            sentence = sentence.replace(split_name, "█████")
-        censored_split.append(sentence)
-
-    new_leksikon.append({"name": name, "content": censored_split})
+    new_leksikon.append({"name": name, "content": content_split})
 
 with open('leksikon.json', 'w') as f:
     #f.write("leksikon = ")
