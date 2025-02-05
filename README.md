@@ -1,1 +1,1 @@
-game using da leksikon
+Source code for [http://www.leksikonshpil.net/](http://www.leksikonshpil.net/), a guessing game using Josh Fogel's translation of the *Lek­sikon fun der nay­er yidish­er literatur*. For the full leksikon, see [here](https://congressforjewishculture.org/lexicon).
