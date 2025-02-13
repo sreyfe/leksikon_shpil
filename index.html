@@ -25,9 +25,9 @@
 				<button onclick="check(this)" class="answer_button" id="answer6" type="button"></button>
 			</div>
 			<div id="bio_reveal">
+				<div id="share"></div>
 				<h2 id="name"></h2>
 				<p id="full_bio"></p>
-				<div id="share"></div>
 			</div>
 			<div id="acknowledgements">
 				<p>Translations by Josh Fogel. For more, see <a href="https://congressforjewishculture.org/lexicon">here</a></p>
@@ -121,7 +121,7 @@
 					document.getElementById("bio_reveal").style.padding = ".5em";
 					document.getElementById("bio_reveal").style.borderRadius = ".3em";
 				}
-				document.getElementById("share").outerHTML = '<div id="share"><button onclick="reveal_popup()">SHARE!</button></div>'
+				document.getElementById("share").outerHTML = '<div id="share"><button onclick="reveal_popup()">Share!</button></div>'
 			}
 
 			function hint(){
