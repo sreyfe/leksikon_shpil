@@ -32,12 +32,21 @@
 				<p>Translations by Josh Fogel. For more, see <a href="https://congressforjewishculture.org/lexicon">here</a></p>
 			</div>
 			<div id="popup">
-				<div class="popup-content">
-					<h2>Popup Title</h2>
-					<p>This popup is controlled with JavaScript.</p>
-					<button id="closePopup" onclick="close_popup()" style="margin-top: 10px; padding:
-						    5px 10px;  
-						    border: none; border-radius: 3px;">Close</button>
+				<div id="popup-content">
+					<p>
+					<span id="popup-copy">
+						Try to beat me at Leksikon Shpil<br>(<span id="date"></span>)
+					<br><span id="boxes"></span>
+					<br>
+					<br><a href="https://www.leksikonshpil.net">www.leksikonshpil.net</a>
+					</p>
+					</span>
+					<div style="text-align: center">
+					<button onclick="copyDivToClipboard()">Copy</button>
+					<button id="closePopup" onclick="close_popup()"
+						    >Close</button>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -51,8 +60,41 @@
 				document.getElementById("status").insertAdjacentHTML('beforeend','<br>Total: ' + guesses + ' GUESSES');
 			}
 
+			function copyDivToClipboard() {
+				var range = document.createRange();
+				range.selectNodeContents(document.getElementById("popup-copy"));
+				window.getSelection().removeAllRanges(); // clear current selection
+				window.getSelection().addRange(range); // to select text
+				document.execCommand("copy");
+				window.getSelection().removeAllRanges();// to deselect
+                }
+
 			function reveal_popup(){
 				document.getElementById("popup").style.display = "inline-flex"
+
+				var today = new Date();
+				var dd = String(today.getDate()).padStart(2, '0');
+				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+				var yyyy = today.getFullYear();
+
+				today = mm + '/' + dd + '/' + yyyy;
+				document.getElementById("date").innerHTML = today
+
+				if (guesses == 5){
+					boxes = "🟥🟥🟥🟥🟥⬜⬜"
+				} else {
+					wrong = guesses - 1;
+					not_guessed = 7 - guesses;
+
+					boxes = "🟥".repeat(wrong) + "🟩" + "⬜".repeat(not_guessed);
+				}
+
+				document.getElementById("boxes").innerHTML = boxes;
+
+
+
+
+
 			}
 
 			function close_popup(){
@@ -78,7 +120,7 @@
 					document.getElementById("bio_reveal").style.padding = ".5em";
 					document.getElementById("bio_reveal").style.borderRadius = ".3em";
 				}
-				document.getElementById("share").outerHTML += '<button onclick="reveal_popup()">share</button>'
+				document.getElementById("share").outerHTML = '<div id="share"><button onclick="reveal_popup()">SHARE!</button></div>'
 			}
 
 			function hint(){
@@ -217,10 +259,13 @@ body {
 			justify-content: center;
 			align-items: center;
 		}
-		.popup-content {
+		#popup-content {
 			background: #fff;
 			padding: 20px;
 			border-radius: 5px;
+			text-align: center;
+		}
+		#share {
 			text-align: center;
 		}
 		</style>
