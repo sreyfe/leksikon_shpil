@@ -82,10 +82,10 @@
 				document.getElementById("date").innerHTML = today
 
 				if (guesses == 5){
-					boxes = "🟥🟥🟥🟥🟥⬜⬜"
+					boxes = "🟥🟥🟥🟥🟥"
 				} else {
 					wrong = guesses - 1;
-					not_guessed = 7 - guesses;
+					not_guessed = 5 - guesses;
 
 					boxes = "🟥".repeat(wrong) + "🟩" + "⬜".repeat(not_guessed);
 				}
